@@ -38,5 +38,17 @@ public class OrderDAO {
         }
     }
 
+    public List<Order> filterOrdersByStatus(String status) {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        try {
+            // JPQL lọc theo trạng thái
+            String jpql = "SELECT o FROM Order o WHERE o.status = :status";
+            TypedQuery<Order> query = em.createQuery(jpql, Order.class);
+            query.setParameter("status", OrderStatus.valueOf(status));
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
+    }
 }
 

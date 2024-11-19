@@ -225,11 +225,10 @@
             <a href="javascript:void(0);"><img src="assets/img/icons/calendars.svg" alt="img"><span> Công việc </span> <span class="menu-arrow"></span></a>
             <ul>
               <li><a href="${pageContext.request.contextPath}/quotationList">Xử lý đơn</a></li>
-                <li><a href="chat.jsp">Tư vấn khách hàng</a></li>
+              <li><a href="chat.jsp">Tư vấn khách hàng</a></li>
             </ul>
           </li>
           <li class="submenu">
-
 
 
         </ul>
