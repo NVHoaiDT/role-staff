@@ -345,556 +345,148 @@
                             </div>
                         </div>
                     </div>
-
-
-
-
-
-
-
-
 <%--///////////////////////////////////////////////////////////////////////////////////////////////////--%>
 <%--///////////////////////////////////////////////////////////////////////////////////////////////////--%>
 <%--///////////////////////////////////////////////////////////////////////////////////////////////////--%>
 <%--///////////////////////////////////////////////////////////////////////////////////////////////////--%>
-
-                    <div class="table-responsive">
-                        <table>
-                        <c:if test="${orders != null}">
-                            <thead>
+                    <table class="table datanew">
+                        <thead>
+                        <tr>
+                            <th>
+                                <label class="checkboxs">
+                                    <input type="checkbox" id="select-all">
+                                    <span class="checkmarks"></span>
+                                </label>
+                            </th>
+                            <th>Mã Order</th>
+                            <th>Tên khách hàng</th>
+                            <th>Ngày đặt hàng</th>
+                            <th>Trạng thái</th>
+                            <th>Xử lý</th>
+                            <th>Lưu</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach var="order" items="${orders}">
                             <tr>
-                                <th>Chọn</th>
-                                <th>Sản phẩm</th>
-                                <th>Mã sản phẩm</th>
-                                <th>Khách hàng</th>
-                                <th>Số lượng</th>
-                                <th>Trạng thái</th>
-                                <th>Thao tác</th>
-                            </tr>
-                            </thead>
-                        </c:if>
-                            <tbody>
-                            <c:forEach var="order" items="${orders}">
-                                <tr>
-                                    <td>
-                                        <label class="checkboxs">
-                                            <input type="checkbox">
-                                            <span class="checkmarks"></span>
-                                        </label>
-                                    </td>
-                                    <td class="productimgname">
-                                        <a href="javascript:void(0);" class="product-img">
-                                            <img src="assets/img/product/product1.jpg" alt="product">
-                                        </a>
-                                        <a href="javascript:void(0);">${order.listOrderItem[0].furniture.name}</a>
-                                    </td>
-                                    <td>${order.listOrderItem[0].furniture.id}</td>
-                                    <td>${order.customer.name}</td>
-                                    <td>${order.listOrderItem[0].quantity}</td>
-                                    <td>
-                                        <span class="badges bg-lightgreen">${order.status.displayName}</span>
-                                        <select name="status" class="badges bg-lightgrey">
+                                <%-- Checkbox --%>
+                                <td>
+                                    <label class="checkboxs">
+                                        <input type="checkbox" name="selectedOrders" >
+                                        <span class="checkmarks"></span>
+                                    </label>
+                                </td>
+
+                                <%-- Mã Order --%>
+                                <td>${order.orderID}</td>
+
+                                <%-- Tên khách hàng --%>
+                                <td>${order.customer.name}</td>
+
+                                <%-- Ngày đặt hàng --%>
+                                <td>
+                                    <fmt:formatDate value="${order.orderDate}" pattern="dd/MM/yyyy" />
+                                </td>
+
+                                <%-- Trạng thái đơn hàng --%>
+                                <td>
+                                    <span>
+                                        ${order.status}
+                                    </span>
+                                </td>
+
+                                <%-- Dropdown cập nhật trạng thái --%>
+                                <td>
+                                    <label>
+                                        <select name="status-${order.orderID}" class="badges bg-lightgrey">
                                             <option value="">Cập nhật:</option>
-                                            <option value="spending">Chờ duyệt</option>
-                                            <option value="ordered">Chờ giao</option>
-                                            <option value="sent">Đã giao</option>
+                                            <option value="WAITING_PROCESS">Chờ duyệt</option>
+                                            <option value="CANCELED">Đã hủy</option>
+                                            <option value="DELIVERING">Đang giao</option>
+                                            <option value="DELIVERED">Đã giao</option>
+                                            <option value="ACCEPTED">Đã nhận hàng</option>
+                                            <option value="REFUNDED">Đã hoàn tiền</option>
+                                            <option value="FEEDBACKED">Đã nhận đánh giá</option>
                                         </select>
-                                    </td>
+                                    </label>
+                                </td>
+
+                                <%-- Nút xử lý --%>
                                     <td>
-                                        <img src="assets/img/icons/transfer1.svg" alt="img">
+                                        <button class="btn btn-primary update-status-btn" data-order-id="${order.orderID}">
+                                            <img src="assets/img/icons/transfer1.svg" alt="Xử lý">
+                                        </button>
                                     </td>
-                                </tr>
-                            </c:forEach>
-                            </tbody>
-                        </table>
+
+                            </tr>
+                        </c:forEach>
+
+                        </tbody>
+                    </table>
 
 <%--///////////////////////////////////////////////////////////////////////////////////////////////////--%>
 <%--///////////////////////////////////////////////////////////////////////////////////////////////////--%>
 <%--///////////////////////////////////////////////////////////////////////////////////////////////////--%>
 <%--///////////////////////////////////////////////////////////////////////////////////////////////////--%>
 
+<script src="assets/js/jquery-3.6.0.min.js"></script>
 
+<script src="assets/js/feather.min.js"></script>
 
+<script src="assets/js/jquery.slimscroll.min.js"></script>
 
+<script src="assets/js/jquery.dataTables.min.js"></script>
+<script src="assets/js/dataTables.bootstrap4.min.js"></script>
 
+<script src="assets/js/bootstrap.bundle.min.js"></script>
 
+<script src="assets/js/moment.min.js"></script>
+<script src="assets/js/bootstrap-datetimepicker.min.js"></script>
 
+<script src="assets/plugins/select2/js/select2.min.js"></script>
 
+<script src="assets/plugins/sweetalert/sweetalert2.all.min.js"></script>
+<script src="assets/plugins/sweetalert/sweetalerts.min.js"></script>
 
+<script src="assets/js/script.js"></script>
 
 
+<%--///////////////////////////////////////////////////////////////////////////////////////////////////--%>
+<%--///////////////////////////////////////////////////////////////////////////////////////////////////--%>
+<%--///////////////////////////////////////////////////////////////////////////////////////////////////--%>
+<%--///////////////////////////////////////////////////////////////////////////////////////////////////--%>
+<script>
+    $(document).on('click', '.update-status-btn', function () {
+        const orderId = $(this).data('order-id');
 
+        const selectName = "status-" + orderId;
 
-<%--&lt;%&ndash;                        <table class="table  datanew">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                            <thead>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                            <tr>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <th>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <label class="checkboxs">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <input type="checkbox" id="select-all">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <span class="checkmarks"></span>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    </label>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                </th>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <th>Sản phẩm</th>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <th>Mã sản phẩm</th>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <th>Khách hàng</th>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <th>Tổng tiền ($)</th>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <th>Xử lý</th>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <th>Lưu</th>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                            </tr>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                            </thead>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                            <tbody>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                            <tr>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <label class="checkboxs">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <input type="checkbox">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <span class="checkmarks"></span>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    </label>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                </td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td class="productimgname">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <a href="javascript:void(0);" class="product-img">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <img src="assets/img/product/product1.jpg" alt="product">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    </a>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <a href="javascript:void(0);">Macbook pro</a>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                </td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>PT001</td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>Nguyen Anh Khoi</td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>550</td>&ndash;%&gt;--%>
+        const newStatus = $(`select[name="{selectName}"]`).val();
 
-<%--&lt;%&ndash;                                <td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <span class="badges bg-lightgreen">Đã giao</span>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <select name = "status" class="badges bg-lightgrey">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="">Cập nhật: </option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="spending">Chờ duyệt</option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="ordered">Chờ giao</option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="sent">Đã giao</option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    </select>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                </td>&ndash;%&gt;--%>
+        console.log(newStatus);
 
-<%--&lt;%&ndash;                                <td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <img src="assets/img/icons/transfer1.svg" alt="img">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                </td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                            </tr>&ndash;%&gt;--%>
+        if (!newStatus) {
+            alert("Vui lòng chọn trạng thái mới!");
+            return;
+        }
 
-
-<%--&lt;%&ndash;                            <tr>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <label class="checkboxs">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <input type="checkbox">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <span class="checkmarks"></span>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    </label>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                </td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td class="productimgname">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <a href="javascript:void(0);" class="product-img">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <img src="assets/img/product/product2.jpg" alt="product">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    </a>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <a href="javascript:void(0);">Orange</a>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                </td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>PT002</td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>Pham Van Duy</td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>410</td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <span class="badges bg-lightyellow">Chờ giao</span>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <select name = "status" class="badges bg-lightgrey">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="">Cập nhật: </option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="spending">Chờ duyệt</option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="ordered">Chờ giao</option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="sent">Đã giao</option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    </select>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                </td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <img src="assets/img/icons/transfer1.svg" alt="img">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                </td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                            </tr>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                            <tr>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <label class="checkboxs">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <input type="checkbox">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <span class="checkmarks"></span>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    </label>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                </td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td class="productimgname">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <a href="javascript:void(0);" class="product-img">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <img src="assets/img/product/product4.jpg" alt="product">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    </a>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <a href="javascript:void(0);">Stawberry</a>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                </td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>PT003</td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>Tran Huyen Nga</td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>210</td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <span class="badges bg-lightred">Chờ duyệt</span>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <select name = "status" class="badges bg-lightgrey">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="">Cập nhật: </option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="spending">Chờ duyệt</option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="ordered">Chờ giao</option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="sent">Đã giao</option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    </select>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                </td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <img src="assets/img/icons/transfer1.svg" alt="img">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                </td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                            </tr>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                            <tr>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <label class="checkboxs">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <input type="checkbox">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <span class="checkmarks"></span>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    </label>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                </td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td class="productimgname">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <a href="javascript:void(0);" class="product-img">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <img src="assets/img/product/product5.jpg" alt="product">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    </a>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <a href="javascript:void(0);">Avocat</a>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                </td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>PT004</td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>Le Van Tu</td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>500</td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <span class="badges bg-lightgreen">Đã giao</span>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <select name = "status" class="badges bg-lightgrey">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="">Cập nhật: </option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="spending">Chờ duyệt</option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="ordered">Chờ giao</option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="sent">Đã giao</option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    </select>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                </td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <img src="assets/img/icons/transfer1.svg" alt="img">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                </td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                            </tr>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                            <tr>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <label class="checkboxs">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <input type="checkbox">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <span class="checkmarks"></span>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    </label>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                </td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td class="productimgname">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <a href="javascript:void(0);" class="product-img">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <img src="assets/img/product/product6.jpg" alt="product">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    </a>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <a href="javascript:void(0);">Macbook Pro</a>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                </td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>PT005</td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>Trinh Hoang Khai</td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>1050</td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <span class="badges bg-lightred">Chờ duyệt</span>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <select name = "status" class="badges bg-lightgrey">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="">Cập nhật: </option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="spending">Chờ duyệt</option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="ordered">Chờ giao</option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="sent">Đã giao</option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    </select>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                </td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <img src="assets/img/icons/transfer1.svg" alt="img">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                </td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                            </tr>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                            <tr>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <label class="checkboxs">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <input type="checkbox">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <span class="checkmarks"></span>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    </label>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                </td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td class="productimgname">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <a href="javascript:void(0);" class="product-img">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <img src="assets/img/product/product7.jpg" alt="product">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    </a>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <a href="javascript:void(0);">Apple Earpods</a>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                </td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>PT006</td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>Hoang Anh Khoa</td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>2530</td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <span class="badges bg-lightgreen">Đã giao</span>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <select name = "status" class="badges bg-lightgrey">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="">Cập nhật: </option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="spending">Chờ duyệt</option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="ordered">Chờ giao</option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="sent">Đã giao</option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    </select>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                </td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <img src="assets/img/icons/transfer1.svg" alt="img">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                </td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                            </tr>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                            <tr>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <label class="checkboxs">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <input type="checkbox">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <span class="checkmarks"></span>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    </label>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                </td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td class="productimgname">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <a href="javascript:void(0);" class="product-img">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <img src="assets/img/product/product8.jpg" alt="product">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    </a>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <a href="javascript:void(0);">iPhone 11 </a>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                </td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>PT007</td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>Do Tan Phat</td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>550</td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <span class="badges bg-lightgreen">Đã giao</span>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <select name = "status" class="badges bg-lightgrey">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="">Cập nhật: </option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="spending">Chờ duyệt</option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="ordered">Chờ giao</option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="sent">Đã giao</option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    </select>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                </td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <img src="assets/img/icons/transfer1.svg" alt="img">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                </td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                            </tr>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                            <tr>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <label class="checkboxs">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <input type="checkbox">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <span class="checkmarks"></span>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    </label>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                </td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td class="productimgname">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <a href="javascript:void(0);" class="product-img">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <img src="assets/img/product/product9.jpg" alt="product">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    </a>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <a href="javascript:void(0);">samsung </a>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                </td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>PT008</td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>Benjamin</td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>550</td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <span class="badges bg-lightgreen">Chờ giao</span>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <select name = "status" class="badges bg-lightgrey">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="">Cập nhật: </option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="spending">Chờ duyệt</option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="ordered">Chờ giao</option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="sent">Đã giao</option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    </select>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                </td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <img src="assets/img/icons/transfer1.svg" alt="img">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                </td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                            </tr>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                            <tr>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <label class="checkboxs">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <input type="checkbox">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <span class="checkmarks"></span>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    </label>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                </td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td class="productimgname">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <a href="javascript:void(0);" class="product-img">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <img src="assets/img/product/product10.jpg" alt="product">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    </a>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <a href="javascript:void(0);">Unpaired gray</a>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                </td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>PT0010</td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>James</td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>210</td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <span class="badges bg-lightred">Chờ duyệt</span>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <select name = "status" class="badges bg-lightgrey">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="">Cập nhật: </option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="spending">Chờ duyệt</option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="ordered">Chờ giao</option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="sent">Đã giao</option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    </select>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                </td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <img src="assets/img/icons/transfer1.svg" alt="img">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                </td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                            </tr>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                            <tr>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <label class="checkboxs">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <input type="checkbox">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <span class="checkmarks"></span>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    </label>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                </td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td class="productimgname">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <a href="javascript:void(0);" class="product-img">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <img src="assets/img/product/product7.jpg" alt="product">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    </a>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <a href="javascript:void(0);">Apple Earpods</a>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                </td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>PT006</td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>B. Huber</td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>2530</td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <span class="badges bg-lightgreen">Đã giao</span>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <select name = "status" class="badges bg-lightgrey">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="">Cập nhật: </option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="spending">Chờ duyệt</option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="ordered">Chờ giao</option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="sent">Đã giao</option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    </select>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                </td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <img src="assets/img/icons/transfer1.svg" alt="img">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                </td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                            </tr>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                            <tr>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <label class="checkboxs">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <input type="checkbox">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <span class="checkmarks"></span>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    </label>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                </td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td class="productimgname">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <a href="javascript:void(0);" class="product-img">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <img src="assets/img/product/product8.jpg" alt="product">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    </a>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <a href="javascript:void(0);">iPhone 11 </a>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                </td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>PT007</td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>Thomas</td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>550</td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <span class="badges bg-lightgreen">Đã giao</span>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <select name = "status" class="badges bg-lightgrey">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="">Cập nhật: </option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="spending">Chờ duyệt</option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="ordered">Chờ giao</option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="sent">Đã giao</option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    </select>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                </td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <img src="assets/img/icons/transfer1.svg" alt="img">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                </td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                            </tr>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                            <tr>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <label class="checkboxs">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <input type="checkbox">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <span class="checkmarks"></span>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    </label>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                </td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td class="productimgname">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <a href="javascript:void(0);" class="product-img">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <img src="assets/img/product/product9.jpg" alt="product">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    </a>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <a href="javascript:void(0);">samsung </a>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                </td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>PT008</td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>Benjamin</td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>550</td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <span class="badges bg-lightgreen">Chờ giao</span>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <select name = "status" class="badges bg-lightgrey">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="">Cập nhật: </option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="spending">Chờ duyệt</option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="ordered">Chờ giao</option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="sent">Đã giao</option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    </select>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                </td>&ndash;%&gt;--%>
-
-<%--&lt;%&ndash;                                <td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <img src="assets/img/icons/transfer1.svg" alt="img">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                </td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                            </tr>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                            </tbody>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                        </table>&ndash;%&gt;--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-<%--            </div>--%>
-
-<%--        </div>--%>
-<%--    </div>--%>
-<%--</div>--%>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<%--<script src="assets/js/jquery-3.6.0.min.js"></script>--%>
-
-<%--<script src="assets/js/feather.min.js"></script>--%>
-
-<%--<script src="assets/js/jquery.slimscroll.min.js"></script>--%>
-
-<%--<script src="assets/js/jquery.dataTables.min.js"></script>--%>
-<%--<script src="assets/js/dataTables.bootstrap4.min.js"></script>--%>
-
-<%--<script src="assets/js/bootstrap.bundle.min.js"></script>--%>
-
-<%--<script src="assets/js/moment.min.js"></script>--%>
-<%--<script src="assets/js/bootstrap-datetimepicker.min.js"></script>--%>
-
-<%--<script src="assets/plugins/select2/js/select2.min.js"></script>--%>
-
-<%--<script src="assets/plugins/sweetalert/sweetalert2.all.min.js"></script>--%>
-<%--<script src="assets/plugins/sweetalert/sweetalerts.min.js"></script>--%>
-
-<%--<script src="assets/js/script.js"></script>--%>
-<%--</body>--%>
-<%--</html>--%>
-
-
-
-
-
-
-
-
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Order List</title>
-</head>
-<body>
-<h1>Danh sách Orders</h1>
-<table>
-    <thead>
-    <tr>
-        <th>Order ID</th>
-        <th>Customer</th>
-        <th>Order Date</th>
-        <th>Status</th>
-    </tr>
-    </thead>
-    <tbody>
-    <c:forEach var="order" items="${orders}">
-        <tr>
-            <td>${order.orderID}</td>
-            <td>${order.customer.name}</td>
-            <td>
-                <fmt:formatDate value="${order.orderDate}" pattern="dd/MM/yyyy" />
-            </td>
-            <td>${order.status}</td>
-        </tr>
-    </c:forEach>
-    </tbody>
-</table>
+        $.ajax({
+            url: 'updateOrderStatus',
+            type: 'POST',
+            data: { orderId: orderId, newStatus: newStatus },
+            success: function (response) {
+                alert(response);
+                location.reload(); // Reload trang để cập nhật trạng thái mới
+            },
+            error: function (xhr) {
+                alert("Có lỗi xảy ra: " + xhr.responseText);
+            }
+        });
+    });
+</script>
+<%--///////////////////////////////////////////////////////////////////////////////////////////////////--%>
+<%--///////////////////////////////////////////////////////////////////////////////////////////////////--%>
+<%--///////////////////////////////////////////////////////////////////////////////////////////////////--%>
+<%--///////////////////////////////////////////////////////////////////////////////////////////////////--%>
 </body>
 </html>

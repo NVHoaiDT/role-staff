@@ -1,6 +1,7 @@
 package DAO;
 
 import business.Order;
+import business.OrderStatus;
 import data.DBUtil;
 import org.apache.xpath.operations.Or;
 
@@ -11,7 +12,6 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 public class OrderDAO {
-//    private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("employeePU");
 
     public List<Order> getAllOrders() {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
@@ -19,7 +19,24 @@ public class OrderDAO {
         return em.createQuery(query, Order.class).getResultList();
     }
 
-//    public void closeEntityManagerFactory() {
-//        emf.close();
-//    }
+    public void updateOrderStatus(Long orderId, String newStatus) {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        try {
+            em.getTransaction().begin();
+
+            Order order = em.find(Order.class, orderId);
+            if (order != null) {
+                order.setStatus(OrderStatus.valueOf(newStatus));
+            }
+
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
+
 }
+

@@ -1,4 +1,4 @@
-package controller;
+package controller.order;
 
 import business.Order;
 import DAO.OrderDAO;
@@ -21,7 +21,6 @@ public class QuotationListServlet extends HttpServlet {
         super.init();
         orderDAO = new OrderDAO(); // Khởi tạo DAO
     }
-
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
