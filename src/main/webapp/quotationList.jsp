@@ -321,14 +321,16 @@
 <%--///////////////////////////////////////////////////////////////////////////////////////////////////--%>
 <%--///////////////////////////////////////////////////////////////////////////////////////////////////--%>
 <%--///////////////////////////////////////////////////////////////////////////////////////////////////--%>
-                    <form id="filter-form">
+                    <form action="filterQuotations" method="get">
                         <div class="card" id="filter_inputs">
                             <div class="card-body pb-0">
                                 <div class="row">
+
+                                    <%--Lọc theo trạng thái đơn hàng--%>
                                     <div class="col-lg-2 col-sm-6 col-12">
                                         <div class="form-group">
-                                            <select name="status" id="status-filter" class="select">
-                                                <option value="">Chọn trạng thái</option>
+                                            <select name="status" class="select">
+                                                <option>Chọn trạng thái</option>
                                                 <option value="WAITING_PROCESS">Chờ duyệt</option>
                                                 <option value="CANCELED">Đã hủy</option>
                                                 <option value="DELIVERING">Đang giao</option>
@@ -341,7 +343,7 @@
                                     </div>
                                     <div class="col-lg-1 col-sm-6 col-12 ms-auto">
                                         <div class="form-group">
-                                            <button type="button" id="filter-button" class="btn btn-filters ms-auto">
+                                            <button type="submit" class="btn btn-filters ms-auto">
                                                 <img src="assets/img/icons/search-whites.svg" alt="img">
                                             </button>
                                         </div>
@@ -350,6 +352,7 @@
                             </div>
                         </div>
                     </form>
+
 
 <%--///////////////////////////////////////////////////////////////////////////////////////////////////--%>
 <%--///////////////////////////////////////////////////////////////////////////////////////////////////--%>
