@@ -3,49 +3,45 @@ package business;
 import javax.persistence.*;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.List;
 
 @Entity
 public class Furniture implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long ID;
-    private String furnitureID;
-    private String furnitureName;
+    private Long id;
     private String furnitureColor;
-    private Double furniturePrice;
+    private Long furniturePrice;
     private String furnitureDescription;
+    @Enumerated(EnumType.STRING)
+    private FurnitureStatus furnitureStatus;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "furniture_id")
+    @OneToMany(mappedBy = "furniture", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Image> furnitureImages;
+
+    public Furniture(String furnitureColor, Long furniturePrice, String furnitureDescription, FurnitureStatus furnitureStatus, Category category, List<Image> furnitureImages) {
+        this.furnitureColor = furnitureColor;
+        this.furniturePrice = furniturePrice;
+        this.furnitureDescription = furnitureDescription;
+        this.furnitureStatus = furnitureStatus;
+        this.category = category;
+        this.furnitureImages = furnitureImages;
+    }
+
 
     public Furniture() {
     }
 
-    public Furniture(String furnitureID, String furnitureName, String furnitureColor, Double furniturePrice, String furnitureDescription, List<Image> furnitureImages) {
-        this.furnitureID = furnitureID;
-        this.furnitureName = furnitureName;
-        this.furnitureColor = furnitureColor;
-        this.furniturePrice = furniturePrice;
-        this.furnitureDescription = furnitureDescription;
-        this.furnitureImages = furnitureImages;
+    public Long getId() {
+        return id;
     }
 
-    public Long getID() {
-        return ID;
-    }
-
-    public void setFurnitureID(Long ID) {
-        this.ID = ID;
-    }
-
-    public String getFurnitureName() {
-        return furnitureName;
-    }
-
-    public void setFurnitureName(String furnitureName) {
-        this.furnitureName = furnitureName;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFurnitureColor() {
@@ -56,11 +52,11 @@ public class Furniture implements Serializable {
         this.furnitureColor = furnitureColor;
     }
 
-    public Double getFurniturePrice() {
+    public Long getFurniturePrice() {
         return furniturePrice;
     }
 
-    public void setFurniturePrice(Double furniturePrice) {
+    public void setFurniturePrice(Long furniturePrice) {
         this.furniturePrice = furniturePrice;
     }
 
@@ -72,19 +68,32 @@ public class Furniture implements Serializable {
         this.furnitureDescription = furnitureDescription;
     }
 
-    public String getFurnitureID() {
-        return furnitureID;
-    }
-
-    public void setFurnitureID(String furnitureID) {
-        this.furnitureID = furnitureID;
-    }
-
     public List<Image> getFurnitureImages() {
         return furnitureImages;
     }
 
     public void setFurnitureImages(List<Image> furnitureImages) {
         this.furnitureImages = furnitureImages;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+    public FurnitureStatus getFurnitureStatus() {
+        return furnitureStatus;
+    }
+
+    public void setFurnitureStatus(FurnitureStatus furnitureStatus) {
+        this.furnitureStatus = furnitureStatus;
+    }
+    public Image getRepresentativeImage() {
+        if (furnitureImages != null && !furnitureImages.isEmpty()) {
+            return furnitureImages.get(0); // Lấy ảnh đầu tiên làm đại diện
+        }
+        return null; // Trả về null nếu không có ảnh nào
     }
 }

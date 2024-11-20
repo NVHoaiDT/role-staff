@@ -4,27 +4,10 @@
  */
 package business;
 
-
-import business.Customer;
-import business.OrderStatus;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import javax.persistence.Enumerated;
-import javax.persistence.EnumType;
 
 /**
  *
@@ -37,30 +20,29 @@ public class Order implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long orderID;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "ORDERID")
-    private List<OrderItem> listOrderItem;
-
+    @OneToMany( cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Furniture> listFurniture;
+    
     @OneToOne
     @JoinColumn(name = "CUSTOMERID")
     private Customer customer;
-
+    
     @Temporal(TemporalType.DATE)
     private Date orderDate;
 
-    @Enumerated(EnumType.STRING)  // Chỉ định cách lưu trữ enum trong cơ sở dữ liệu
+    @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
     public Order() {
     }
 
-    public Order(List<OrderItem> listOrderItem, Customer customer, Date orderDate, OrderStatus status) {
-        this.listOrderItem = listOrderItem;
+    public Order(List<Furniture> listFurniture, Customer customer, Date orderDate, OrderStatus status) {
+        this.listFurniture = listFurniture;
         this.customer = customer;
         this.orderDate = orderDate;
         this.status = status;
     }
-
+   
     public Long getOrderID() {
         return orderID;
     }
@@ -69,12 +51,12 @@ public class Order implements Serializable {
         this.orderID = orderID;
     }
 
-    public List<OrderItem> getListOrderItem() {
-        return listOrderItem;
+    public List<Furniture> getListOrderItem() {
+        return listFurniture;
     }
 
-    public void setListOrderItem(List<OrderItem> listOrderItem) {
-        this.listOrderItem = listOrderItem;
+    public void setListOrderItem(List<Furniture> listOrderItem) {
+        this.listFurniture = listOrderItem;
     }
 
     public Customer getCustomer() {
@@ -99,5 +81,16 @@ public class Order implements Serializable {
 
     public void setStatus(OrderStatus status) {
         this.status = status;
+    }
+
+    public double getTotalAmount() {
+        double totalAmount = 0;
+        /*
+        for (Furniture item : listFurniture) {
+            totalAmount += item.getQuantity() * item.getFurniture().getFurniturePrice();
+        }
+         */
+
+        return totalAmount;
     }
 }

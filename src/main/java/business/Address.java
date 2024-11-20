@@ -1,62 +1,68 @@
 package business;
-
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.io.Serializable;
 
 @Entity
-public class Address implements Serializable
-{
+public class Address implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int addressId;
-    private String country;
-    private String city;
+    private Long addressID;
     private String street;
+    private String city;
+    private String province;
+    private String country;
 
-    public Address()
-    {
-        country = "";
-        city = "";
-        street = "";
+    public Address() {
     }
-    public Address(String country, String city, String street)
-    {
-        this.country = country;
-        this.city = city;
+
+    public Address(Long addressID, String street, String city, String province, String country) {
+        this.addressID = addressID;
         this.street = street;
-    }
-    public int getAddressId(){
-        return addressId;
-    }
-    public void setAddressId(int addressID){
-        this.addressId = addressID;
-    }
-    public String getCountry()
-    {
-        return country;
-    }
-    public void setCountry(String country)
-    {
+        this.city = city;
+        this.province = province;
         this.country = country;
     }
-    public String getCity(){
-        return city;
+
+    
+    public Long getAddressID() {
+        return addressID;
     }
-    public void setCity(String city)
-    {
-        this.city = city;
+
+    public void setAddressID(Long addressID) {
+        this.addressID = addressID;
     }
-    public String getStreet()
-    {
+
+    public String getStreet() {
         return street;
     }
-    public void setStreet(String street)
-    {
+
+    public void setStreet(String street) {
         this.street = street;
     }
 
-    @Override
-    public String toString(){
-        return country + " " + city + " " + street;
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+    public void setCountry(String country) {
+        this.country = country;
     }
 }

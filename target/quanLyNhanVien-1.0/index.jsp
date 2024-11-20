@@ -1,4 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="business.Staff" %>
+<%@ page import="java.util.Date" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -224,8 +227,12 @@
           <li class="submenu">
             <a href="javascript:void(0);"><img src="assets/img/icons/calendars.svg" alt="img"><span> Công việc </span> <span class="menu-arrow"></span></a>
             <ul>
+
+
               <li><a href="${pageContext.request.contextPath}/quotationList">Xử lý đơn</a></li>
-              <li><a href="chat.jsp">Tư vấn khách hàng</a></li>
+              <li><a href="${pageContext.request.contextPath}/loadCustomerList">Chat (NV)</a></li>
+
+
             </ul>
           </li>
           <li class="submenu">

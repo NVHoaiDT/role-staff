@@ -2,62 +2,76 @@ package business;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.JoinColumn;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "messages")
 public class Message implements Serializable {
 
     @Id
-    private String messID;
-    private String content;
-    private LocalDateTime sentTime;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "msg_id")
+    private Long msgID;
 
-    @ManyToOne
-    @JoinColumn(name = "sender_id") 
-    private Customer sender;
+    @Column(name = "incoming_msg_id", nullable = false, length = 255)
+    private String incomingMsgID;
+
+    @Column(name = "outgoing_msg_id", nullable = false, length = 255)
+    private String outgoingMsgID;
+
+    @Column(name = "msg", nullable = false, length = 1000)
+    private String msg;
+
+    @Column(name = "sent_date", nullable = false)
+    private LocalDateTime sentDate;
 
     public Message() {
     }
 
-    public Message(String messID, String content, LocalDateTime sentTime, Customer sender) {
-        this.messID = messID;
-        this.content = content;
-        this.sentTime = sentTime;
-        this.sender = sender;
+    public Message(String incomingMsgID, String outgoingMsgID, String msg, LocalDateTime sentDate) {
+        this.incomingMsgID = incomingMsgID;
+        this.outgoingMsgID = outgoingMsgID;
+        this.msg = msg;
+        this.sentDate = sentDate;
     }
 
-    public String getMessID() {
-        return messID;
+    public Long getMsgID() {
+        return msgID;
     }
 
-    public void setMessID(String messID) {
-        this.messID = messID;
+    public void setMsgID(Long msgID) {
+        this.msgID = msgID;
     }
 
-    public String getContent() {
-        return content;
+    public String getIncomingMsgID() {
+        return incomingMsgID;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setIncomingMsgID(String incomingMsgID) {
+        this.incomingMsgID = incomingMsgID;
     }
 
-    public LocalDateTime getSentTime() {
-        return sentTime;
+    public String getOutgoingMsgID() {
+        return outgoingMsgID;
     }
 
-    public void setSentTime(LocalDateTime sentTime) {
-        this.sentTime = sentTime;
+    public void setOutgoingMsgID(String outgoingMsgID) {
+        this.outgoingMsgID = outgoingMsgID;
     }
 
-    public Customer getSender() {
-        return sender;
+    public String getMsg() {
+        return msg;
     }
 
-    public void setSender(Customer sender) {
-        this.sender = sender;
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public LocalDateTime getSentDate() {
+        return sentDate;
+    }
+
+    public void setSentDate(LocalDateTime sentDate) {
+        this.sentDate = sentDate;
     }
 }

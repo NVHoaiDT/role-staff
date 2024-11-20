@@ -1,6 +1,5 @@
 package business;
 
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -8,28 +7,21 @@ import java.util.Date;
 @Entity
 public class Shift implements Serializable {
     @Id
-    private String shiftID;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long shiftID;
     private String shiftName;
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.DATE)   
     private Date shiftDate;
     private String startTime;
     private String endTime;
-
+    
     // Getters and Setters
 
-    public Shift(){}
-    public Shift(String shiftName, String startTime, String endTime, Date shiftDate) {
-        this.shiftID = shiftName+shiftDate.toString();
-        this.shiftName = shiftName;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.shiftDate = shiftDate;
-    }
-    public String getShiftID() {
+    public Long getShiftID() {
         return shiftID;
     }
 
-    public void setShiftID(String shiftID) {
+    public void setShiftID(Long shiftID) {
         this.shiftID = shiftID;
     }
 
@@ -63,5 +55,5 @@ public class Shift implements Serializable {
 
     public void setEndTime(String endTime) {
         this.endTime = endTime;
-    }
+    }   
 }
