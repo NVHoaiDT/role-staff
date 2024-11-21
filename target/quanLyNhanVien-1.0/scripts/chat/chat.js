@@ -8,7 +8,7 @@ let out_id = document.getElementById("outgoing_id").value;
 let in_id = document.getElementById("incoming_id").value;
 
 
- // Submit data to server
+// Submit data to server
 function submitForm() {
 
         var form1 = document.getElementById("message_box");
@@ -16,11 +16,11 @@ function submitForm() {
 
         let msg = document.getElementById("message").value;
 
-        msg = msg.replaceAll(" ", "__5oO84a9__");
+        //msg = msg.replaceAll(" ", "__5oO84a9__");
 
         // Send the form data using Ajax
         var xhr = new XMLHttpRequest();
-        var url = "insertChat?outgoing_id=" + encodeURIComponent(out_id) + "&incoming_id=" + encodeURIComponent(in_id)+ "&message=" + encodeURIComponent(msg);
+        var url = "insertChat?outgoing_id=" + out_id + "&incoming_id=" + in_id + "&message=" + msg;
 
         xhr.open("POST", url, true);
 
@@ -34,10 +34,11 @@ function submitForm() {
         xhr.send();
    }
 
+
 // Get data from server
 function sendGetRequest() {
   // Define the URL servlet page
-  var servletURL = "get_chat?outgoing_id=" + encodeURIComponent(out_id) + "&incoming_id=" + encodeURIComponent(in_id);
+  var servletURL = "getChat?outgoing_id=" + out_id + "&incoming_id=" + in_id;
 
   // Send a GET request using the fetch API
   fetch(servletURL, {

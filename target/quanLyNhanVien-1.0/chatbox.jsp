@@ -39,7 +39,7 @@
           <p>Chào bạn!</p>
         </div>
       </div>
-      <div class="chat incoming">
+      <div class="chat outgoing">
         <div class="details">
           <p>Hi !?</p>
         </div>
