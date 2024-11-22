@@ -2,8 +2,8 @@ const form = document.querySelector(".typing-area"),
 inputField = form.querySelector(".input-field"),
 sendBtn = form.querySelector("button"),
 chatBox = document.querySelector(".chat-box");
- 
-  
+
+
 let out_id = document.getElementById("outgoing_id").value;
 let in_id = document.getElementById("incoming_id").value;
 
@@ -37,6 +37,7 @@ function submitForm() {
 
 // Get data from server
 function sendGetRequest() {
+
   // Define the URL servlet page
   var servletURL = "getChat?outgoing_id=" + out_id + "&incoming_id=" + in_id;
 
@@ -48,16 +49,13 @@ function sendGetRequest() {
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-      return response.text(); // or response.json() if the servlet returns JSON
+      return response.text();
     })
     .then(data => {
          // Process the response data
          console.log(data);
          chatBox.innerHTML = data;
 
-         if(!chatBox.classList.contains("active")){
-             scrollToBottom();
-         }
     })
     .catch(error => {
       console.error('Error:', error);
@@ -65,9 +63,7 @@ function sendGetRequest() {
 }
 
 
-
-
-const intervalId = setInterval(sendGetRequest, 700);     
+const intervalId = setInterval(sendGetRequest, 700);
 
 function scrollToBottom(){
 	chatBox.scrollTop = chatBox.scrollHeight;

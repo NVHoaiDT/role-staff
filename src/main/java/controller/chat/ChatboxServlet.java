@@ -19,8 +19,8 @@ public class ChatboxServlet extends HttpServlet {
         String incoming_id = request.getParameter("incoming_id");
         String outgoing_id = request.getParameter("outgoing_id");
 
-        System.out.println("Incoming ID: " + incoming_id);
-        System.out.println("Outgoing ID: " + outgoing_id);
+        System.out.println("Incoming ID from ChatBoxServlet: " + incoming_id);
+        System.out.println("Outgoing ID from ChatBoxServlet: " + outgoing_id);
 
         UserInfoDAO userInfoDAO = new UserInfoDAO();
 
@@ -31,6 +31,9 @@ public class ChatboxServlet extends HttpServlet {
         // Truyền thông tin tới JSP
         request.setAttribute("staff", staff);
         request.setAttribute("customer", customer);
+        request.setAttribute("incoming_id", incoming_id);
+        request.setAttribute("outgoing_id", outgoing_id);
+
         request.getRequestDispatcher("chatbox.jsp").forward(request, response);
     }
 }

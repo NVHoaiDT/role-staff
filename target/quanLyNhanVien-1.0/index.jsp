@@ -231,7 +231,7 @@
 
               <li><a href="${pageContext.request.contextPath}/quotationList">Xử lý đơn</a></li>
               <li><a href="${pageContext.request.contextPath}/loadCustomerList">Chat (NV)</a></li>
-
+              <li><a href="${pageContext.request.contextPath}/loadStaffChatList">Chat (kH)</a></li>
 
             </ul>
           </li>

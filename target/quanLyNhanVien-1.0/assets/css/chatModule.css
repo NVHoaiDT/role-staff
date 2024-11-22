@@ -294,8 +294,11 @@ form .name-details .field:last-child{
 				0 16px 16px -16px rgb(0 0 0 / 10%);
 }
 
+
+
 .chat-box .outgoing{
 	display: flex;
+	align-items: flex-start;
 }
 .outgoing .details{
 	margin-left: auto;
@@ -306,6 +309,9 @@ form .name-details .field:last-child{
 	color: white;
 	border-radius: 18px 18px 0 18px;
 }
+
+
+
 .chat-box .incoming{
 	display: flex;
 	align-items: flex-end;

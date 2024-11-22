@@ -5,13 +5,13 @@
 
 <!DOCTYPE html>
 <html>
-<head>
-	<meta charset="ISO-8859-1">
-	<title>Chat</title>
-	<link rel="stylesheet" href="assets/css/chatModule.css">
+	<head>
+		<meta charset="ISO-8859-1">
+		<title>Chat</title>
+		<link rel="stylesheet" href="assets/css/chatModule.css">
 
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
-</head>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+	</head>
 <body>
 
 <div class="wrapper">
