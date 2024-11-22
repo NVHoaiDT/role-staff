@@ -119,18 +119,40 @@ public class ChatDAO {
         return chatHistory;
     }
 
-    public Message getLatestMessage(String incomingMsgID, String outgoingMsgID) {
+//    public Message getLatestMessage(String incomingMsgID, String outgoingMsgID) {
+//        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+//        Message latestMessage = null;
+//        try {
+//            String query = "SELECT m FROM Message m " +
+//                    "WHERE m.incomingMsgID = :incomingMsgID " +
+//                    "AND m.outgoingMsgID = :outgoingMsgID " +
+//                    "ORDER BY m.sentDate DESC";
+//            latestMessage = em.createQuery(query, Message.class)
+//                    .setParameter("incomingMsgID", incomingMsgID)
+//                    .setParameter("outgoingMsgID", outgoingMsgID)
+//                    .setMaxResults(1) // Chỉ lấy tin nhắn mới nhất
+//                    .getSingleResult();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            em.close();
+//        }
+//        return latestMessage;
+//    }
+
+
+    public Message getLatestMessage(String personID1, String personID2) {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
         Message latestMessage = null;
         try {
             String query = "SELECT m FROM Message m " +
-                    "WHERE m.incomingMsgID = :incomingMsgID " +
-                    "AND m.outgoingMsgID = :outgoingMsgID " +
+                    "WHERE (m.incomingMsgID = :personID1 AND m.outgoingMsgID = :personID2) " +
+                    "   OR (m.incomingMsgID = :personID2 AND m.outgoingMsgID = :personID1) " +
                     "ORDER BY m.sentDate DESC";
             latestMessage = em.createQuery(query, Message.class)
-                    .setParameter("incomingMsgID", incomingMsgID)
-                    .setParameter("outgoingMsgID", outgoingMsgID)
-                    .setMaxResults(1) // Chỉ lấy tin nhắn mới nhất
+                    .setParameter("personID1", personID1)
+                    .setParameter("personID2", personID2)
+                    .setMaxResults(1) // Lấy tin nhắn mới nhất
                     .getSingleResult();
         } catch (Exception e) {
             e.printStackTrace();
@@ -139,6 +161,7 @@ public class ChatDAO {
         }
         return latestMessage;
     }
+
 
     public boolean insertMessage(Message message) {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();

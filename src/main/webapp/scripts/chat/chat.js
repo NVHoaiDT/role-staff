@@ -16,8 +16,6 @@ function submitForm() {
 
         let msg = document.getElementById("message").value;
 
-        //msg = msg.replaceAll(" ", "__5oO84a9__");
-
         // Send the form data using Ajax
         var xhr = new XMLHttpRequest();
         var url = "insertChat?outgoing_id=" + out_id + "&incoming_id=" + in_id + "&message=" + msg;
@@ -55,7 +53,7 @@ function sendGetRequest() {
          // Process the response data
          console.log(data);
          chatBox.innerHTML = data;
-
+         scrollToBottom();
     })
     .catch(error => {
       console.error('Error:', error);
@@ -67,6 +65,7 @@ const intervalId = setInterval(sendGetRequest, 700);
 
 function scrollToBottom(){
 	chatBox.scrollTop = chatBox.scrollHeight;
+    console.log("scrolled To Bottom");
 }
 
 form.onsubmit = (e) =>{

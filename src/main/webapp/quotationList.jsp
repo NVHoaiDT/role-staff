@@ -235,7 +235,7 @@
     </div>
 
 
-    <%--Sidebar--%>
+    <%----------------------------------Sidebar----------------------------------%>
     <div class="sidebar" id="sidebar">
         <div class="sidebar-inner slimscroll">
             <div id="sidebar-menu" class="sidebar-menu">
@@ -248,9 +248,13 @@
 
                     <li class="submenu">
                         <a href="javascript:void(0);"><img src="assets/img/icons/quotation1.svg" alt="img"><span> Công việc </span> <span class="menu-arrow"></span></a>
+
                         <ul>
-                            <li><a href="quotationList.jsp">Xử lý đơn</a></li>
-                            <li><a href="chat.jsp">Tư vấn khách hàng</a></li>
+
+                            <li><a href="${pageContext.request.contextPath}/quotationList">Xử lý đơn</a></li>
+                            <li><a href="${pageContext.request.contextPath}/loadCustomerList">Chat (NV)</a></li>
+                            <li><a href="${pageContext.request.contextPath}/loadStaffChatList">Chat (kH)</a></li>
+
                         </ul>
                     </li>
                     <li class="submenu">
@@ -259,46 +263,42 @@
             </div>
         </div>
     </div>
+    <%----------------------------------End sidebar----------------------------------%>
 
 
-
-    <%--Main content--%>
-
-
+    <%-----------------------------------Main content-----------------------------------%>
     <div class="page-wrapper">
         <div class="content">
+
             <div class="page-header">
                 <div class="page-title">
-                    <h4>Order List</h4>
-                    <h6>Manage your Quotations</h6>
+                    <h4>Đơn Hàng</h4>
+                    <h6>Quản lý đơn hàng</h6>
                 </div>
             </div>
 
             <div class="card">
                 <div class="card-body">
+
+                <%---------------------------------Table top-----------------------------------%>
                     <div class="table-top">
                         <div class="search-set">
-                            <div class="search-path">
 
+                            <%-------------------------Btn filter-------------------------%>
+                            <div class="search-path">
                                 <a class="btn btn-filter" id="filter_search">
                                     <img src="assets/img/icons/filter.svg" alt="img">
                                     <span><img src="assets/img/icons/closes.svg" alt="img"></span>
                                 </a>
                             </div>
 
-
-
-
-
+                            <%-------------------------Btn search-------------------------%>
                             <div class="search-input">
                                 <a class="btn btn-searchset"><img src="assets/img/icons/search-white.svg" alt="img"></a>
                             </div>
-
-
-
-
-
                         </div>
+
+                        <%-------------------------pdf, exel, print-------------------------%>
                         <div class="wordset">
                             <ul>
                                 <li>
@@ -316,17 +316,20 @@
                             </ul>
                         </div>
                     </div>
+                <%---------------------------------End table top-----------------------------------%>
 
-<%--///////////////////////////////////////////////////////////////////////////////////////////////////--%>
-<%--///////////////////////////////////////////////////////////////////////////////////////////////////--%>
-<%--///////////////////////////////////////////////////////////////////////////////////////////////////--%>
-<%--///////////////////////////////////////////////////////////////////////////////////////////////////--%>
+
+
+            <%--///////////////////////////////////////////////////////////////////////////////////////////////////--%>
+            <%--///////////////////////////////////////////////////////////////////////////////////////////////////--%>
+            <%--///////////////////////////////////////////////////////////////////////////////////////////////////--%>
+            <%--///////////////////////////////////////////////////////////////////////////////////////////////////--%>
                     <form action="filterQuotations" method="get">
                         <div class="card" id="filter_inputs">
                             <div class="card-body pb-0">
                                 <div class="row">
 
-                                    <%--Lọc theo trạng thái đơn hàng--%>
+                                    <%--------------------oorder status slelector--------------------%>
                                     <div class="col-lg-2 col-sm-6 col-12">
                                         <div class="form-group">
                                             <select name="status" class="select">
@@ -341,6 +344,9 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <%--------------------end oorder status slelector--------------------%>
+
+                                    <%------------------------filter btn------------------------%>
                                     <div class="col-lg-1 col-sm-6 col-12 ms-auto">
                                         <div class="form-group">
                                             <button type="submit" class="btn btn-filters ms-auto">
@@ -348,95 +354,97 @@
                                             </button>
                                         </div>
                                     </div>
+                                    <%------------------------end filter btn------------------------%>
+
                                 </div>
                             </div>
                         </div>
                     </form>
 
 
-<%--///////////////////////////////////////////////////////////////////////////////////////////////////--%>
-<%--///////////////////////////////////////////////////////////////////////////////////////////////////--%>
-<%--///////////////////////////////////////////////////////////////////////////////////////////////////--%>
-<%--///////////////////////////////////////////////////////////////////////////////////////////////////--%>
+            <%--//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////--%>
+            <%--//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////--%>
+            <%--//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////--%>
+            <%--//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////--%>
                     <table class="table datanew">
                         <thead>
-                        <tr>
-                            <th>
-                                <label class="checkboxs">
-                                    <input type="checkbox" id="select-all">
-                                    <span class="checkmarks"></span>
-                                </label>
-                            </th>
-                            <th>Mã Order</th>
-                            <th>Tên khách hàng</th>
-                            <th>Ngày đặt hàng</th>
-                            <th>Trạng thái</th>
-                            <th>Xử lý</th>
-                            <th>Lưu</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <c:forEach var="order" items="${filteredOrders}">
                             <tr>
-                                <%-- Checkbox --%>
-                                <td>
+                                <th>
                                     <label class="checkboxs">
-                                        <input type="checkbox" name="selectedOrders" >
+                                        <input type="checkbox" id="select-all">
                                         <span class="checkmarks"></span>
                                     </label>
-                                </td>
+                                </th>
+                                <th>Mã Order</th>
+                                <th>Tên khách hàng</th>
+                                <th>Ngày đặt hàng</th>
+                                <th>Trạng thái đơn hàng</th>
+                                <th>Xử lý</th>
+                                <th>Lưu</th>
+                            </tr>
+                        </thead>
 
-                                <%-- Mã Order --%>
-                                <td>${order.orderID}</td>
-
-                                <%-- Tên khách hàng --%>
-                                <td>${order.customer.name}</td>
-
-                                <%-- Ngày đặt hàng --%>
-                                <td>
-                                    <fmt:formatDate value="${order.orderDate}" pattern="dd/MM/yyyy" />
-                                </td>
-
-                                <%-- Trạng thái đơn hàng --%>
-                                <td>
-                                    <span>
-                                        ${order.status}
-                                    </span>
-                                </td>
-
-                                <%-- Dropdown cập nhật trạng thái --%>
-                                <td>
-                                    <label>
-                                        <select name="status-${order.orderID}" class="badges bg-lightgrey">
-                                            <option value="">Cập nhật:</option>
-                                            <option value="WAITING_PROCESS">Chờ duyệt</option>
-                                            <option value="CANCELED">Đã hủy</option>
-                                            <option value="DELIVERING">Đang giao</option>
-                                            <option value="DELIVERED">Đã giao</option>
-                                            <option value="ACCEPTED">Đã nhận hàng</option>
-                                            <option value="REFUNDED">Đã hoàn tiền</option>
-                                            <option value="FEEDBACKED">Đã nhận đánh giá</option>
-                                        </select>
-                                    </label>
-                                </td>
-
-                                <%-- Nút xử lý --%>
+                        <tbody>
+                            <c:forEach var="order" items="${filteredOrders}">
+                                <tr>
+                                    <%-- Checkbox --%>
                                     <td>
-                                        <button class="btn btn-primary update-status-btn" data-order-id="${order.orderID}">
-                                            <img src="assets/img/icons/transfer1.svg" alt="Xử lý">
-                                        </button>
+                                        <label class="checkboxs">
+                                            <input type="checkbox" name="selectedOrders" >
+                                            <span class="checkmarks"></span>
+                                        </label>
                                     </td>
 
-                            </tr>
-                        </c:forEach>
+                                    <%-- Mã Order --%>
+                                    <td>${order.orderID}</td>
 
+                                    <%-- Tên khách hàng --%>
+                                    <td>${order.customer.name}</td>
+
+                                    <%-- Ngày đặt hàng --%>
+                                    <td>
+                                        <fmt:formatDate value="${order.orderDate}" pattern="dd/MM/yyyy" />
+                                    </td>
+
+                                    <%-- Trạng thái đơn hàng --%>
+                                    <td>
+                                        <span>
+                                            ${order.status}
+                                        </span>
+                                    </td>
+
+                                    <%-- Dropdown cập nhật trạng thái --%>
+                                    <td>
+                                        <label>
+                                            <select name="status-${order.orderID}" class="badges bg-lightgrey">
+                                                <option value="">Cập nhật:</option>
+                                                <option value="WAITING_PROCESS">Chờ duyệt</option>
+                                                <option value="CANCELED">Đã hủy</option>
+                                                <option value="DELIVERING">Đang giao</option>
+                                                <option value="DELIVERED">Đã giao</option>
+                                                <option value="ACCEPTED">Đã nhận hàng</option>
+                                                <option value="REFUNDED">Đã hoàn tiền</option>
+                                                <option value="FEEDBACKED">Đã nhận đánh giá</option>
+                                            </select>
+                                        </label>
+                                    </td>
+
+                                    <%-- Nút xử lý --%>
+                                        <td>
+                                            <button class="btn btn-primary update-status-btn" data-order-id="${order.orderID}">
+                                                <img src="assets/img/icons/transfer1.svg" alt="Xử lý">
+                                            </button>
+                                        </td>
+
+                                </tr>
+                            </c:forEach>
                         </tbody>
                     </table>
 
-<%--///////////////////////////////////////////////////////////////////////////////////////////////////--%>
-<%--///////////////////////////////////////////////////////////////////////////////////////////////////--%>
-<%--///////////////////////////////////////////////////////////////////////////////////////////////////--%>
-<%--///////////////////////////////////////////////////////////////////////////////////////////////////--%>
+            <%--//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////--%>
+            <%--//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////--%>
+            <%--//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////--%>
+            <%--//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////--%>
 
 <script src="assets/js/jquery-3.6.0.min.js"></script>
 
@@ -497,5 +505,6 @@
 <%--///////////////////////////////////////////////////////////////////////////////////////////////////--%>
 <%--///////////////////////////////////////////////////////////////////////////////////////////////////--%>
 <%--///////////////////////////////////////////////////////////////////////////////////////////////////--%>
+    <%-----------------------------------End Main content-----------------------------------%>
 </body>
 </html>
