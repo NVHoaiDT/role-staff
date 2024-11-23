@@ -10,7 +10,7 @@ import javax.persistence.TypedQuery;
 
 public class UserInfoDAO {
 
-    public Customer getCustomerInfoById(String id) {
+    public Customer getCustomerInfoById(Long id) {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
         String query = "SELECT c FROM Customer c WHERE c.personID = :id"; // Truy vấn JPQL
         try {
@@ -25,7 +25,7 @@ public class UserInfoDAO {
         }
     }
 
-    public Staff getStaffInfoById(String id) {
+    public Staff getStaffInfoById(Long id) {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
         String query = "SELECT s FROM Staff s WHERE s.personID = :id"; // Truy vấn JPQL
         try {

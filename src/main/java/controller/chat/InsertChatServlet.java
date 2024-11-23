@@ -16,8 +16,13 @@ public class InsertChatServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String outgoingID = request.getParameter("outgoing_id");
-        String incomingID = request.getParameter("incoming_id");
+        String outgoingIDRequest = request.getParameter("outgoing_id");
+        String incomingIDRequest = request.getParameter("incoming_id");
+
+        Long outgoingID = Long.parseLong(outgoingIDRequest);
+        Long incomingID = Long.parseLong(incomingIDRequest);
+
+
         String message = request.getParameter("message");
 
         if (outgoingID == null || incomingID == null || message == null || message.trim().isEmpty()) {

@@ -20,7 +20,6 @@
 
     <!-- user header -->
     <header>
-      <%--<a href="customerChatList.jsp" class="back-icon"><i class="fas fa-arrow-left"></i></a>--%>
         <c:if test="${outgoingUser.avatar != null}">
           <img alt="User" src="data:image/jpeg;base64, ${ImageUtil.DisplayImage(outgoingUser.avatar)}">
         </c:if>

@@ -16,9 +16,12 @@ public class ChatboxServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String incomingId = (String) request.getParameter("incoming_id");
-        String outgoingId = (String) request.getParameter("outgoing_id");
-        String currentRole = (String) request.getParameter("currentRole");
+        String incomingIdRequest = request.getParameter("incoming_id");
+        String outgoingIdRequest = request.getParameter("outgoing_id");
+        String currentRole = request.getParameter("currentRole");
+
+        Long incomingId = Long.parseLong(incomingIdRequest);
+        Long outgoingId = Long.parseLong(outgoingIdRequest);
 
         UserInfoDAO userInfoDAO = new UserInfoDAO();
 

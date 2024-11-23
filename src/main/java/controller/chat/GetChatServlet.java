@@ -20,9 +20,11 @@ public class GetChatServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html; charset=UTF-8");
 
-        String outgoingID = (String) request.getParameter("outgoing_id");
-        String incomingID = (String) request.getParameter("incoming_id");
+        String outgoingIDRequest = request.getParameter("outgoing_id");
+        String incomingIDRequest = request.getParameter("incoming_id");
 
+        Long outgoingID = Long.parseLong(outgoingIDRequest);
+        Long incomingID = Long.parseLong(incomingIDRequest);
 
         if (outgoingID == null || incomingID == null) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);

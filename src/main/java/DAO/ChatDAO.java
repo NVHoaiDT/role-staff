@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 public class ChatDAO {
 
-    public List<Customer> getCustomerList(String staffID) {
+    public List<Customer> getCustomerList(Long staffID) {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
         List<Customer> customers = null;
         String query = "SELECT DISTINCT c " +
@@ -54,7 +54,7 @@ public class ChatDAO {
         return customers;
     }
 
-    public List<Staff> getStaffChatList(String customerID) {
+    public List<Staff> getStaffChatList(Long customerID) {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
         List<Staff> staffs = null;
         String query = "SELECT DISTINCT s " +
@@ -89,8 +89,6 @@ public class ChatDAO {
                     })
                     .collect(Collectors.toList());
 
-            System.out.println(staffs);
-
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -99,7 +97,7 @@ public class ChatDAO {
         return staffs;
     }
 
-    public List<Message> getChatHistory(String outgoingID, String incomingID) {
+    public List<Message> getChatHistory(Long outgoingID, Long incomingID) {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
         List<Message> chatHistory = null;
         try {
@@ -141,25 +139,26 @@ public class ChatDAO {
 //    }
 
 
-    public Message getLatestMessage(String personID1, String personID2) {
+    public Message getLatestMessage(Long personID1, Long personID2) {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
-        Message latestMessage = null;
-        try {
-            String query = "SELECT m FROM Message m " +
-                    "WHERE (m.incomingMsgID = :personID1 AND m.outgoingMsgID = :personID2) " +
-                    "   OR (m.incomingMsgID = :personID2 AND m.outgoingMsgID = :personID1) " +
-                    "ORDER BY m.sentDate DESC";
-            latestMessage = em.createQuery(query, Message.class)
-                    .setParameter("personID1", personID1)
-                    .setParameter("personID2", personID2)
-                    .setMaxResults(1) // Lấy tin nhắn mới nhất
-                    .getSingleResult();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            em.close();
+        List<Message> messages = null;
+
+        String query = "SELECT m FROM Message m " +
+                "WHERE (m.incomingMsgID = :personID1 AND m.outgoingMsgID = :personID2) " +
+                "   OR (m.incomingMsgID = :personID2 AND m.outgoingMsgID = :personID1) " +
+                "ORDER BY m.sentDate DESC";
+        messages = em.createQuery(query, Message.class)
+                .setParameter("personID1", personID1)
+                .setParameter("personID2", personID2)
+                .setMaxResults(1)
+                .getResultList();
+                //getSingleResult()
+
+        if (messages.isEmpty()) {
+            return null;
+        } else {
+            return messages.get(0);
         }
-        return latestMessage;
     }
 
 

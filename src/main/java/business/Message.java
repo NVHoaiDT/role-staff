@@ -14,10 +14,10 @@ public class Message implements Serializable {
     private Long msgID;
 
     @Column(name = "incoming_msg_id", nullable = false, length = 255)
-    private String incomingMsgID;
+    private Long incomingMsgID;
 
     @Column(name = "outgoing_msg_id", nullable = false, length = 255)
-    private String outgoingMsgID;
+    private Long outgoingMsgID;
 
     @Column(name = "msg", nullable = false, length = 1000)
     private String msg;
@@ -28,7 +28,7 @@ public class Message implements Serializable {
     public Message() {
     }
 
-    public Message(String incomingMsgID, String outgoingMsgID, String msg, LocalDateTime sentDate) {
+    public Message(Long incomingMsgID, Long outgoingMsgID, String msg, LocalDateTime sentDate) {
         this.incomingMsgID = incomingMsgID;
         this.outgoingMsgID = outgoingMsgID;
         this.msg = msg;
@@ -43,19 +43,19 @@ public class Message implements Serializable {
         this.msgID = msgID;
     }
 
-    public String getIncomingMsgID() {
+    public Long getIncomingMsgID() {
         return incomingMsgID;
     }
 
-    public void setIncomingMsgID(String incomingMsgID) {
+    public void setIncomingMsgID(Long incomingMsgID) {
         this.incomingMsgID = incomingMsgID;
     }
 
-    public String getOutgoingMsgID() {
+    public Long getOutgoingMsgID() {
         return outgoingMsgID;
     }
 
-    public void setOutgoingMsgID(String outgoingMsgID) {
+    public void setOutgoingMsgID(Long outgoingMsgID) {
         this.outgoingMsgID = outgoingMsgID;
     }
 

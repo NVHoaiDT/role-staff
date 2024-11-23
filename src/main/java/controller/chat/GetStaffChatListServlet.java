@@ -33,8 +33,11 @@ public class GetStaffChatListServlet extends HttpServlet {
 
         // Lấy staffID từ session
         HttpSession session = request.getSession();
-        session.setAttribute("customerID", "2");
-        String customerID = (String) session.getAttribute("customerID");
+
+        session.setAttribute("customerID", "1");
+
+        String customerIDString = (String) session.getAttribute("customerID");
+        Long customerID = Long.parseLong(customerIDString);
 
         try {
             //get cutomer
@@ -43,7 +46,7 @@ public class GetStaffChatListServlet extends HttpServlet {
 
             List<Staff> staffs = chatDAO.getStaffChatList(customerID);
 
-            Map<String, String> latestMessages = new HashMap<>();
+            Map<Long, String> latestMessages = new HashMap<>();
 
             for (Staff staff : staffs) {
                 Message latestMessageObj = chatDAO.getLatestMessage(staff.getPersonID(), customerID);
