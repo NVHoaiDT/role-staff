@@ -10,6 +10,7 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page import="utils.ImageUtil" %>
 
 <!DOCTYPE html>
 <html>
@@ -27,9 +28,14 @@
 
       <header>
         <div class="content">
-          <img alt="" src="">
+          <c:if test="${customer.avatar != null}">
+            <img alt="Customer" src="data:image/jpeg;base64, ${ImageUtil.DisplayImage(customer.avatar)}">
+          </c:if>
+          <c:if test="${customer.avatar == null}">
+            <img alt="Customer" src="https://via.placeholder.com/150">
+          </c:if>
           <div class="details">
-            <span>FE Customer</span>
+            <span>${customer.name}</span>
             <p>Active</p>
           </div>
         </div>
@@ -46,10 +52,19 @@
         <c:forEach var="staff" items="${staffs}">
 
           <!-------------------------------- Forward chatbox -------------------------------->
-          <a href="${pageContext.request.contextPath}/chatbox?incoming_id=${customerID}&outgoing_id=${staff.personID}">
+          <a href="${pageContext.request.contextPath}/chatbox?incoming_id=${customerID}&outgoing_id=${staff.personID}&currentRole=${"customer"}">
 
             <div class="content">
-              <img alt="" src="${staff.avatar}">
+
+
+              <c:if test="${staff.avatar != null}">
+                <img alt="Staff" src="data:image/jpeg;base64, ${ImageUtil.DisplayImage(staff.avatar)}">
+              </c:if>
+              <c:if test="${staff.avatar == null}">
+                <img alt="Staff" src="https://via.placeholder.com/150">
+              </c:if>
+
+
               <div class="details">
                 <span>${staff.name}</span>
                   <p>

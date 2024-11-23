@@ -2,6 +2,7 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page import="utils.ImageUtil" %>
 
 <!DOCTYPE html>
 <html>
@@ -19,10 +20,15 @@
 
 		<header>
 			<div class="content">
-				<img alt="" src="">
+				<c:if test="${staff.avatar != null}">
+					<img alt="Staff" src="data:image/jpeg;base64, ${ImageUtil.DisplayImage(staff.avatar)}">
+				</c:if>
+				<c:if test="${staff.avatar == null}">
+					<img alt="Staff" src="https://via.placeholder.com/150">
+				</c:if>
 				<div class="details">
-					<span>FE Staff</span>
-					<p>Active 24/7</p>
+					<span>${staff.name}</span>
+					<p>Active</p>
 				</div>
 			</div>
 		</header>
@@ -38,10 +44,15 @@
 			<c:forEach var="customer" items="${customers}">
 
 				<!-- Chuyển hướng đến chatbox khi nhấn vào khách hàng -->
-				<a href="${pageContext.request.contextPath}/chatbox?incoming_id=${staffID}&outgoing_id=${customer.personID}">
+				<a href="${pageContext.request.contextPath}/chatbox?incoming_id=${staffID}&outgoing_id=${customer.personID}&currentRole=${"staff"}">
 
 				<div class="content">
-						<img alt="" src="${customer.avatar}">
+					<c:if test="${customer.avatar != null}">
+						<img alt="Customer" src="data:image/jpeg;base64, ${ImageUtil.DisplayImage(customer.avatar)}">
+					</c:if>
+					<c:if test="${customer.avatar == null}">
+						<img alt="Customer" src="https://via.placeholder.com/150">
+					</c:if>
 						<div class="details">
 							<span>${customer.name}</span>
 							<p>

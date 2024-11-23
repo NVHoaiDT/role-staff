@@ -16,23 +16,23 @@ public class ChatboxServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String incoming_id = request.getParameter("incoming_id");
-        String outgoing_id = request.getParameter("outgoing_id");
-
-        System.out.println("Incoming ID from ChatBoxServlet: " + incoming_id);
-        System.out.println("Outgoing ID from ChatBoxServlet: " + outgoing_id);
+        String incomingId = (String) request.getParameter("incoming_id");
+        String outgoingId = (String) request.getParameter("outgoing_id");
+        String currentRole = (String) request.getParameter("currentRole");
 
         UserInfoDAO userInfoDAO = new UserInfoDAO();
 
-        // Lấy thông tin nhân viên và khách hàng
-        Staff staff = userInfoDAO.getStaffInfoById(incoming_id);
-        Customer customer = userInfoDAO.getCustomerInfoById(outgoing_id);
+        Object outgoingUser;
 
-        // Truyền thông tin tới JSP
-        request.setAttribute("staff", staff);
-        request.setAttribute("customer", customer);
-        request.setAttribute("incoming_id", incoming_id);
-        request.setAttribute("outgoing_id", outgoing_id);
+        if ("staff".equals(currentRole)) {
+            outgoingUser = userInfoDAO.getCustomerInfoById(outgoingId);
+        } else {
+            outgoingUser = userInfoDAO.getStaffInfoById(outgoingId);
+        }
+
+        request.setAttribute("outgoingUser", outgoingUser);
+        request.setAttribute("incoming_id", incomingId);
+        request.setAttribute("outgoing_id", outgoingId);
 
         request.getRequestDispatcher("chatbox.jsp").forward(request, response);
     }

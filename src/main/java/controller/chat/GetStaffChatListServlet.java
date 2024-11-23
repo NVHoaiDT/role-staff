@@ -1,5 +1,6 @@
 package controller.chat;
 
+import DAO.UserInfoDAO;
 import business.Customer;
 import DAO.ChatDAO;
 import business.Message;
@@ -36,24 +37,24 @@ public class GetStaffChatListServlet extends HttpServlet {
         String customerID = (String) session.getAttribute("customerID");
 
         try {
-            // Lấy danh sách khách hàng đã được sắp xếp theo tin nhắn mới nhất trong ChatDAO
+            //get cutomer
+            UserInfoDAO userInfoDAO = new UserInfoDAO();
+            Customer customer = userInfoDAO.getCustomerInfoById(customerID);
+
             List<Staff> staffs = chatDAO.getStaffChatList(customerID);
 
-            // Tạo một Map để lưu thông tin tin nhắn mới nhất cho mỗi nhân viên
             Map<String, String> latestMessages = new HashMap<>();
 
-            // Lấy tin nhắn mới nhất của mỗi nhân viên và lưu vào Map
             for (Staff staff : staffs) {
-                // Lấy đối tượng Message mới nhất
                 Message latestMessageObj = chatDAO.getLatestMessage(staff.getPersonID(), customerID);
                 if (latestMessageObj != null) {
                     latestMessages.put(staff.getPersonID(), latestMessageObj.getMsg());
                 } else {
-                    latestMessages.put(staff.getPersonID(), "Không có tin nhắn");
+                    latestMessages.put(staff.getPersonID(), "Chưa có tin nhắn");
                 }
             }
 
-            // Truyền danh sách khách hàng và tin nhắn mới nhất vào request
+            request.setAttribute("customer", customer);
             request.setAttribute("staffs", staffs);
             request.setAttribute("latestMessages", latestMessages);
 

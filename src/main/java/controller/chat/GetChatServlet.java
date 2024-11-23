@@ -20,22 +20,20 @@ public class GetChatServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html; charset=UTF-8");
 
-        String outgoingID = request.getParameter("outgoing_id");
-        String incomingID = request.getParameter("incoming_id");
+        String outgoingID = (String) request.getParameter("outgoing_id");
+        String incomingID = (String) request.getParameter("incoming_id");
 
-        System.out.println("incoming from GetChat: " + incomingID);
-        System.out.println("outgoing from GetChat: " + outgoingID);
 
         if (outgoingID == null || incomingID == null) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
 
-        // Lấy danh sách tin nhắn
+
         ChatDAO chatDAO = new ChatDAO();
         List<Message> chatHistory = chatDAO.getChatHistory(outgoingID, incomingID);
 
-        // Xây dựng HTML để trả về
+
         StringBuilder chatHTML = new StringBuilder();
         for (Message message : chatHistory) {
             if (message.getOutgoingMsgID().equals(outgoingID)) {
