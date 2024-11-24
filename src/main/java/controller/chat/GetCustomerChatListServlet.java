@@ -4,6 +4,7 @@ import business.Customer;
 import DAO.UserInfoDAO;
 import DAO.ChatDAO;
 import business.Message;
+import business.Shift;
 import business.Staff;
 
 import javax.servlet.ServletException;
@@ -13,9 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @WebServlet("/loadCustomerList")
 public class GetCustomerChatListServlet extends HttpServlet {
@@ -30,19 +29,22 @@ public class GetCustomerChatListServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Lấy staffID từ session
+
+        // session
         HttpSession session = request.getSession();
 
-        session.setAttribute("staffID", "11");
+        // session.setAttribute("staffID", "11");
+        // String staffIDString = (String) session.getAttribute("staffID");
+        // Long staffID = Long.parseLong(staffIDString);
 
-        String staffIDString = (String) session.getAttribute("staffID");
-        Long staffID = Long.parseLong(staffIDString);
-
+        Staff staffSession = (Staff) session.getAttribute("staff");
+        Long staffID = staffSession.getPersonID();
 
         try {
             //staff info
             UserInfoDAO userInfoDAO = new UserInfoDAO();
             Staff staff = userInfoDAO.getStaffInfoById(staffID);
+
 
             // customer list --> lasted message
             List<Customer> customers = chatDAO.getCustomerList(staffID);

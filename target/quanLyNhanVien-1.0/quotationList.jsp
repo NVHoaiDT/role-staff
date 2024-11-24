@@ -436,7 +436,7 @@
                                     </tr>
                                 </c:forEach>
                             </c:when>
-                            
+
                             <c:otherwise>
                                 <c:forEach var="order" items="${orders}">
                                     <tr>
