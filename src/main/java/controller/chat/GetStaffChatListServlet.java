@@ -34,12 +34,13 @@ public class GetStaffChatListServlet extends HttpServlet {
         // session
         HttpSession session = request.getSession();
 
-        // session.setAttribute("customerID", "1");
-        // String customerIDString = (String) session.getAttribute("customerID");
-        // Long customerID = Long.parseLong(customerIDString);
+        // Fa ke session
+         session.setAttribute("customerID", "1");
+         String customerIDString = (String) session.getAttribute("customerID");
+         Long customerID = Long.parseLong(customerIDString);
 
-        Customer customerSession = (Customer) session.getAttribute("customer");
-        Long customerID = customerSession.getPersonID();
+//        Customer customerSession = (Customer) session.getAttribute("customer");
+//        Long customerID = customerSession.getPersonID();
 
         try {
             //get cutomer
