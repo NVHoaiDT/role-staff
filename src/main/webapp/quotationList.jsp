@@ -361,85 +361,138 @@
                         </div>
                     </form>
 
-
             <%--//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////--%>
             <%--//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////--%>
             <%--//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////--%>
             <%--//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////--%>
                     <table class="table datanew">
                         <thead>
-                            <tr>
-                                <th>
-                                    <label class="checkboxs">
-                                        <input type="checkbox" id="select-all">
-                                        <span class="checkmarks"></span>
-                                    </label>
-                                </th>
-                                <th>Mã Order</th>
-                                <th>Tên khách hàng</th>
-                                <th>Ngày đặt hàng</th>
-                                <th>Trạng thái đơn hàng</th>
-                                <th>Xử lý</th>
-                                <th>Lưu</th>
-                            </tr>
+                        <tr>
+                            <th>
+                                <label class="checkboxs">
+                                    <input type="checkbox" id="select-all">
+                                    <span class="checkmarks"></span>
+                                </label>
+                            </th>
+                            <th>Mã Order</th>
+                            <th>Tên khách hàng</th>
+                            <th>Ngày đặt hàng</th>
+                            <th>Trạng thái đơn hàng</th>
+                            <th>Xử lý</th>
+                            <th>Lưu</th>
+                        </tr>
                         </thead>
-
                         <tbody>
-                            <c:forEach var="order" items="${filteredOrders}">
-                                <tr>
-                                    <%-- Checkbox --%>
-                                    <td>
-                                        <label class="checkboxs">
-                                            <input type="checkbox" name="selectedOrders" >
-                                            <span class="checkmarks"></span>
-                                        </label>
-                                    </td>
+                        <c:choose>
+                            <c:when test="${filteredOrders != null}">
+                                <c:forEach var="order" items="${filteredOrders}">
+                                    <tr>
+                                        <%-- Checkbox --%>
+                                        <td>
+                                            <label class="checkboxs">
+                                                <input type="checkbox" name="selectedOrders">
+                                                <span class="checkmarks"></span>
+                                            </label>
+                                        </td>
 
-                                    <%-- Mã Order --%>
-                                    <td>${order.orderID}</td>
+                                        <%-- Mã Order --%>
+                                        <td>${order.orderID}</td>
 
-                                    <%-- Tên khách hàng --%>
-                                    <td>${order.customer.name}</td>
+                                        <%-- Tên khach hàng --%>
+                                        <td>${order.customer.name}</td>
 
-                                    <%-- Ngày đặt hàng --%>
-                                    <td>
-                                        <fmt:formatDate value="${order.orderDate}" pattern="dd/MM/yyyy" />
-                                    </td>
+                                        <%-- Ngày đặt hàng --%>
+                                        <td>
+                                            <fmt:formatDate value="${order.orderDate}" pattern="dd/MM/yyyy" />
+                                        </td>
 
-                                    <%-- Trạng thái đơn hàng --%>
-                                    <td>
-                                        <span>
-                                            ${order.status}
-                                        </span>
-                                    </td>
+                                        <%-- Trạng thái đơn hàng --%>
+                                        <td>
+                                            <span>${order.status}</span>
+                                        </td>
 
-                                    <%-- Dropdown cập nhật trạng thái --%>
-                                    <td>
-                                        <label>
-                                            <select name="status-${order.orderID}" class="badges bg-lightgrey">
-                                                <option value="">Cập nhật:</option>
-                                                <option value="WAITING_PROCESS">Chờ duyệt</option>
-                                                <option value="CANCELED">Đã hủy</option>
-                                                <option value="DELIVERING">Đang giao</option>
-                                                <option value="DELIVERED">Đã giao</option>
-                                                <option value="ACCEPTED">Đã nhận hàng</option>
-                                                <option value="REFUNDED">Đã hoàn tiền</option>
-                                                <option value="FEEDBACKED">Đã nhận đánh giá</option>
-                                            </select>
-                                        </label>
-                                    </td>
+                                        <%-- Dropdown cập nhật trạng thái --%>
+                                        <td>
+                                            <label>
+                                                <select name="status-${order.orderID}" class="badges bg-lightgrey">
+                                                    <option value="">Cập nhật:</option>
+                                                    <option value="WAITING_PROCESS">Chờ duyệt</option>
+                                                    <option value="CANCELED">Đã hủy</option>
+                                                    <option value="DELIVERING">Đang giao</option>
+                                                    <option value="DELIVERED">Đã giao</option>
+                                                    <option value="ACCEPTED">Đã nhận hàng</option>
+                                                    <option value="REFUNDED">Đã hoàn tiền</option>
+                                                    <option value="FEEDBACKED">Đã nhận đánh giá</option>
+                                                </select>
+                                            </label>
+                                        </td>
 
-                                    <%-- Nút xử lý --%>
+                                        <%-- Nút xử lý --%>
                                         <td>
                                             <button class="btn btn-primary update-status-btn" data-order-id="${order.orderID}">
                                                 <img src="assets/img/icons/transfer1.svg" alt="Xử lý">
                                             </button>
                                         </td>
+                                    </tr>
+                                </c:forEach>
+                            </c:when>
 
-                                </tr>
-                            </c:forEach>
+                            <c:otherwise>
+                                <c:forEach var="order" items="${orders}">
+                                    <tr>
+                                        <%-- Checkbox --%>
+                                        <td>
+                                            <label class="checkboxs">
+                                                <input type="checkbox" name="selectedOrders">
+                                                <span class="checkmarks"></span>
+                                            </label>
+                                        </td>
+
+                                        <%-- Mã Order --%>
+                                        <td>${order.orderID}</td>
+
+                                        <%-- Tên khách hàng --%>
+                                        <td>${order.customer.name}</td>
+
+                                        <%-- Ngày đặt hàng --%>
+                                        <td>
+                                            <fmt:formatDate value="${order.orderDate}" pattern="dd/MM/yyyy" />
+                                        </td>
+
+                                        <%-- Trạng thái đơn hàng --%>
+                                        <td>
+                                            <span>${order.status}</span>
+                                        </td>
+
+                                        <%-- Dropdown cập nhật trạng thái --%>
+                                        <td>
+                                            <label>
+                                                <select name="status-${order.orderID}" class="badges bg-lightgrey">
+                                                    <option value="">Cập nhật:</option>
+                                                    <option value="WAITING_PROCESS">Chờ duyệt</option>
+                                                    <option value="CANCELED">Đã hủy</option>
+                                                    <option value="DELIVERING">Đang giao</option>
+                                                    <option value="DELIVERED">Đã giao</option>
+                                                    <option value="ACCEPTED">Đã nhận hàng</option>
+                                                    <option value="REFUNDED">Đã hoàn tiền</option>
+                                                    <option value="FEEDBACKED">Đã nhận đánh giá</option>
+                                                </select>
+                                            </label>
+                                        </td>
+
+                                        <%-- Nút xử lý --%>
+                                        <td>
+                                            <button class="btn btn-primary update-status-btn" data-order-id="${order.orderID}">
+                                                <img src="assets/img/icons/transfer1.svg" alt="Xử lý">
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </c:otherwise>
+                        </c:choose>
                         </tbody>
                     </table>
+
 
             <%--//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////--%>
             <%--//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////--%>
@@ -493,7 +546,7 @@
             data: { orderId: orderId, newStatus: newStatus },
             success: function (response) {
                 alert(response);
-                location.reload(); // Reload trang để cập nhật trạng thái mới
+                location.reload();
             },
             error: function (xhr) {
                 alert("Có lỗi xảy ra: " + xhr.responseText);

@@ -25,17 +25,13 @@ public class QuotationListServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            // Lấy danh sách tất cả các Orders
             List<Order> orders = orderDAO.getAllOrders();
-            System.out.println(orders);
-            // Gắn danh sách Order vào request attribute để hiển thị trên JSP
             request.setAttribute("orders", orders);
 
         } catch (Exception e) {
             e.printStackTrace();
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Có lỗi xảy ra khi xử lý yêu cầu.");
         }
-        // Forward tới trang JSP hiển thị danh sách Order
         request.getRequestDispatcher("quotationList.jsp").forward(request, response);
     }
 
