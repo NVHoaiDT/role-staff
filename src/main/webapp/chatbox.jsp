@@ -8,15 +8,13 @@
 <head>
   <meta charset="UTF-8">
   <title>Our Chat</title>
-  <link rel="stylesheet" href="assets/css/chatModule.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/chatModule.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
 </head>
 <body>
 
 <div class="wrapper">
   <section class="chat-area">
-    <%---------------------    <p>Incoming: ${incoming_id}</p>  ---------------------%>
-    <%---------------------    <p>Outgoing: ${outgoing_id}</p>  ---------------------%>
 
     <!-- user header -->
     <header>

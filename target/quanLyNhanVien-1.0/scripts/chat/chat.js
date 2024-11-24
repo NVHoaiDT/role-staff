@@ -39,12 +39,14 @@ function submitForm() {
 
 
 ////////////////////////// Get data from server //////////////////////////
+let isFirstRequest = true;
+
 function sendGetRequest() {
 
     // URL servlet page
     var servletURL = "getChat?outgoing_id=" + out_id + "&incoming_id=" + in_id;
 
-    // Send a GET request with fetch API
+    // fetch API
     fetch(servletURL, {
         method: 'GET',
     })
@@ -56,7 +58,11 @@ function sendGetRequest() {
         })
         .then(data => {
             chatBox.innerHTML = data;
-            scrollToBottom();
+
+            if (isFirstRequest) {
+                scrollToBottom();
+                isFirstRequest = false;
+            }
         })
         .catch(error => {
             console.error('Error:', error);

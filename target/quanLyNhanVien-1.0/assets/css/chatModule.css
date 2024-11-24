@@ -1,12 +1,16 @@
 @charset "ISO-8859-1";
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Dancing+Script|Itim|Lobster|Montserrat:500|Noto+Serif|Nunito|Patrick+Hand|Roboto+Mono:100,100i,300,300i,400,400i,500,500i,700,700i|Roboto+Slab|Saira');
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital@0;1&display=swap');
+
 *{
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
 	text-decoration: none;
-	font-family: 'Roboto Slab', serif !important;
+	font-family: "Rubik", sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 400;
+	font-style: normal;
 }
 body{
 	display: flex;
@@ -20,7 +24,7 @@ body{
 	width: 450px;
 	border-radius: 16px;
 	box-shadow: 0 0 128px 0 rgba(0,0,0,0.1),
-				0 32px 64px -48px rgba(0,0,0,0.5);
+	0 32px 64px -48px rgba(0,0,0,0.5);
 }
 
 
@@ -37,7 +41,7 @@ body{
 
 .form form{
 	margin: 20px 0;
-	
+
 }
 .form form .error-txt{
 	color: #721c24;
@@ -173,7 +177,7 @@ form .name-details .field:last-child{
 	position: relative;
 	align-items: center;
 	justify-content: space-between;
-	
+
 }
 .users .search .text{
 	font-size: 18px;
@@ -211,7 +215,7 @@ form .name-details .field:last-child{
 .users .search button.active{
 	color: #fff;
 	background: #333;
-	
+
 }
 .users .search button.active i::before{
 	content: "\f00d";
@@ -223,15 +227,14 @@ form .name-details .field:last-child{
 
 
 :is(.users-list, .chat-box)::-webkit-scrollbar {
-  	width: 0;
+	width: 0;
 }
 
 .users-list a {
 	margin-bottom: 15px;
-	/*page-break-after: 10px;*/
+	page-break-after: always;
 	padding-right: 15px;
 	border-bottom-color: #f1f1f1;
-	
 }
 
 .users-list a:last-child{
@@ -276,12 +279,12 @@ form .name-details .field:last-child{
 }
 .chat-box{
 	height: 500px;
-	
+
 	overflow-y: auto;
 	background: #f7f7f7;
 	padding: 10px 30px 20px 30px;
 	box-shadow: inset 0 32px 32px -32px rgb(0 0 0 / 5%),
-				inset 0 -32px 32px -32px rgb(0 0 0 / 5%);
+	inset 0 -32px 32px -32px rgb(0 0 0 / 5%);
 }
 .chat-box .chat{
 	margin: 15px 0;
@@ -291,14 +294,11 @@ form .name-details .field:last-child{
 	word-wrap: break-word;
 	padding: 8px 16px;
 	box-shadow: 0 0 32px rgb(0 0 0 / 8%),
-				0 16px 16px -16px rgb(0 0 0 / 10%);
+	0 16px 16px -16px rgb(0 0 0 / 10%);
 }
-
-
 
 .chat-box .outgoing{
 	display: flex;
-	align-items: flex-start;
 }
 .outgoing .details{
 	margin-left: auto;
@@ -309,9 +309,6 @@ form .name-details .field:last-child{
 	color: white;
 	border-radius: 18px 18px 0 18px;
 }
-
-
-
 .chat-box .incoming{
 	display: flex;
 	align-items: flex-end;
@@ -332,7 +329,7 @@ form .name-details .field:last-child{
 	background: #fff;
 	border-radius: 18px 18px 18px 0;
 }
- 	
+
 .chat-area .typing-area{
 	padding: 18px 30px;
 	display: flex;

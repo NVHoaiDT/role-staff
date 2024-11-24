@@ -10,7 +10,6 @@
 		<meta charset="ISO-8859-1">
 		<title>Chat</title>
 		<link rel="stylesheet" href="assets/css/chatModule.css">
-
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
 	</head>
 <body>
@@ -36,7 +35,7 @@
 		<div class="search">
 			<span class="text">Select a user to start chat...</span>
 			<input type="text" placeholder="Enter name to search...">
-			<button><i class="fas fa-search"></i></button>
+			<button><i class="fa fa-search"></i></button>
 		</div>
 
 		<%------------------------------------Start Customer List------------------------------------%>
